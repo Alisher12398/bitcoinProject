@@ -5,11 +5,11 @@
     <string name="title_transaction_list">Список транзакций</string>
     <string name="password">Пароль</string>
     <string name="email">Email</string>
-<!--    <string name=""></string>-->
-<!--    <string name=""></string>-->
-<!--    <string name=""></string>-->
-<!--    <string name=""></string>-->
-<!--    <string name=""></string>-->
-<!--    <string name=""></string>-->
-<!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
 </resources>
