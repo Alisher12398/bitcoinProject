@@ -1,9 +1,20 @@
 package khalykbayev.bitcoinproject.Models
 
-data class Transaction (
-    val date: String,
-    val tid: String,
-    val price: String,
-    val type: String,
-    val amount: String
-)
+import com.google.gson.annotations.SerializedName
+
+class Transaction {
+    @SerializedName("date")
+    val date: String? = null
+
+    @SerializedName("tid")
+    val tid: Int? = null
+
+    @SerializedName("price")
+    val price: String? = null
+
+    @SerializedName("type")
+    val type: Int? = null
+
+    @SerializedName("amount")
+    val amount: String? = null
+}

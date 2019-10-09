@@ -1,2 +1,0 @@
-package khalykbayev.bitcoinproject.Api
-
