@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.Toast
 import khalykbayev.bitcoinproject.Api.BitstampApi
 import khalykbayev.bitcoinproject.App
 import khalykbayev.bitcoinproject.Auth.AuthActivity
@@ -28,12 +32,35 @@ class TransactionList : Fragment() {
     }
 
     private lateinit var viewModel: TransactionListViewModel
+    private var transactionList: ArrayList<Transaction> = ArrayList()
+    lateinit var listView: ListView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.transaction_list_fragment, container, false)
+
+        val adapter = ArrayAdapter(root.context,
+            R.layout.transactions_listview_item, array)
+
+        listView = root.findViewById(R.id.transactions_listview)
+        adapter.setNotifyOnChange(true)
+        listView.adapter = adapter
+        listView.onItemClickListener = object : AdapterView.OnItemClickListener {
+
+            override fun onItemClick(parent: AdapterView<*>, view: View,
+                                     position: Int, id: Long) {
+
+                // value of item that is clicked
+                val itemValue = listView.getItemAtPosition(position) as String
+
+                // Toast the values
+                Toast.makeText(context,
+                    "Position :$position\nItem Value : $itemValue", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
         return root
     }
 
@@ -43,6 +70,22 @@ class TransactionList : Fragment() {
         // TODO: Use the ViewModel
         Log.d(TAG, "onActivityCreated")
 
+        App.api.getTransactionList("minute").enqueue(object :
+            Callback<ArrayList<Transaction>> {
+
+            override fun onResponse(call: Call<ArrayList<Transaction>>, response: Response<ArrayList<Transaction>>) {
+                if (response.code() == 200) {
+                    val response = response.body()!!
+                    transactionList = response
+                    listView.invalidateViews()
+                    Log.d(TAG, "bodybody success count:${transactionList.count()}")
+                    Log.d(TAG, "bodybody success 2:${transactionList[2].amount}")
+                }
+            }
+            override fun onFailure(call: Call<ArrayList<Transaction>>, t: Throwable) {
+                Log.d(TAG, "bodybody onFailure")
+            }
+        })
 
     }
 
@@ -50,39 +93,6 @@ class TransactionList : Fragment() {
         super.onStart()
         Log.d(TAG, "onStart")
 
-        //run("https://www.bitstamp.net/api/transactions/?time=minute")
-
-
-        App.api.getTransactionList("minute").enqueue(object :
-            Callback<ArrayList<Transaction>> {
-
-            override fun onResponse(call: Call<ArrayList<Transaction>>, response: Response<ArrayList<Transaction>>) {
-                if (response.code() == 200) {
-                    val response = response.body()!!
-                    Log.d(TAG, "bodybody success:${response[2].amount}")
-                } else {
-                    Log.d(TAG, "bodybody success not 200")
-                }
-            }
-            override fun onFailure(call: Call<ArrayList<Transaction>>, t: Throwable) {
-                Log.d(TAG, "bodybody onFailure")
-            }
-        })
     }
-
-//    fun run(url: String) {
-//        val request = Request.Builder()
-//            .url(url)
-//            .build()
-////= println(response.body()?.string())
-//        client.newCall(request).enqueue(object : Callback {
-//            override fun onFailure(call: Call, e: IOException) {
-//                Log.d(TAG, "response onFailure")
-//            }
-//            override fun onResponse(call: Call, response: Response) {
-//                Log.d(TAG, "response true:${response.body()?.string()}")
-//            }
-//        })
-//    }
 
 }
