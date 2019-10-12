@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import khalykbayev.bitcoinproject.Adapter.TransactionListAdapter
 import khalykbayev.bitcoinproject.Api.BitstampApi
 import khalykbayev.bitcoinproject.App
 import khalykbayev.bitcoinproject.Auth.AuthActivity
@@ -24,10 +25,7 @@ import java.io.IOException
 
 class TransactionList : Fragment() {
 
-    //private var client = OkHttpClient()
-
     companion object {
-        fun newInstance() = TransactionList()
         private const val TAG = "TransactionListActivity"
     }
 
@@ -41,26 +39,18 @@ class TransactionList : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.transaction_list_fragment, container, false)
 
-        val adapter = ArrayAdapter(root.context,
-            R.layout.transactions_listview_item, array)
+        val adapter = TransactionListAdapter(root.context,transactionList)
 
         listView = root.findViewById(R.id.transactions_listview)
-        adapter.setNotifyOnChange(true)
+        adapter.notifyDataSetChanged()
         listView.adapter = adapter
-        listView.onItemClickListener = object : AdapterView.OnItemClickListener {
-
-            override fun onItemClick(parent: AdapterView<*>, view: View,
-                                     position: Int, id: Long) {
-
-                // value of item that is clicked
+        listView.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
                 val itemValue = listView.getItemAtPosition(position) as String
-
-                // Toast the values
                 Toast.makeText(context,
                     "Position :$position\nItem Value : $itemValue", Toast.LENGTH_LONG)
                     .show()
             }
-        }
         return root
     }
 
