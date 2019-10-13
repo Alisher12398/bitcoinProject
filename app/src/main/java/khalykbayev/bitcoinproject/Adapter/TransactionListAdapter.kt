@@ -1,52 +1,57 @@
 package khalykbayev.bitcoinproject.Adapter
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import khalykbayev.bitcoinproject.Models.Transaction
 import khalykbayev.bitcoinproject.R
+import kotlinx.android.synthetic.main.transaction_list_item.view.*
 
-class TransactionListAdapter(private val context: Context,
-                    private val dataSource: ArrayList<Transaction>) : BaseAdapter() {
 
-    private val inflater: LayoutInflater
-            = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    override fun getCount(): Int {
-        return dataSource.size
-    }
 
-    override fun getItem(position: Int): Transaction {
-        return dataSource[position]
-    }
+class TransactionListAdapter(var transactions:ArrayList<Transaction>): RecyclerView.Adapter<TransactionListAdapter.ViewHolder>(){
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-    @SuppressLint("ViewHolder")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        holder.date.text = transactions[position].date
+        holder.amount.text = transactions[position].amount
 
-        val rowView = inflater.inflate(R.layout.transactions_listview_item, parent, false)
-
-        val transactionTypeTextView = rowView.findViewById(R.id.transaction_type) as TextView
-        val transactionDateTextView = rowView.findViewById(R.id.transaction_date) as TextView
-        val transactionAmountTextView = rowView.findViewById(R.id.transaction_amount) as TextView
-
-        val transaction = getItem(position)
-
-        if (transaction.type == 0) {
-            transactionTypeTextView.text = "Покупка"
-        } else {
-            transactionTypeTextView.text = "Продажа"
+        var type = ""
+        if (transactions[position].type == 0) {
+            type = "Покупка"
+        } else if (transactions[position].type == 1) {
+            type = "Продажа"
         }
-        transactionDateTextView.text = transaction.date
-        transactionAmountTextView.text = transaction.amount
+        holder.type.text = type
+    }
 
-        return rowView
+    fun getId(position: Int): Int? {
+        return transactions[position].tid
+    }
+
+    override fun onCreateViewHolder(holder: ViewGroup, position: Int): ViewHolder {
+        val inflater = LayoutInflater.from(holder.context)
+        val view = inflater.inflate(R.layout.transaction_list_item, holder, false)
+        return ViewHolder(view)
+    }
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
+
+    override fun getItemCount(): Int {
+        return transactions.size
+    }
+
+    fun refresh() {
+        notifyDataSetChanged()
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        var date: TextView = itemView.transaction_date
+        var type: TextView = itemView.transaction_type
+        var amount: TextView = itemView.transaction_amount
     }
 }

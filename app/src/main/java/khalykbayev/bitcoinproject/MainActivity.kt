@@ -1,6 +1,7 @@
 package khalykbayev.bitcoinproject
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -25,5 +26,13 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navView.setOnClickListener {
+            Log.d(TAG, "${it.id}")
+        }
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }

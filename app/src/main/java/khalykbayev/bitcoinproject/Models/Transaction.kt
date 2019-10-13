@@ -4,17 +4,26 @@ import com.google.gson.annotations.SerializedName
 
 class Transaction {
     @SerializedName("date")
-    val date: String? = null
+    var date: String? = null
 
     @SerializedName("tid")
-    val tid: Int? = null
+    var tid: Int? = null
 
     @SerializedName("price")
-    val price: String? = null
+    var price: String? = null
 
     @SerializedName("type")
-    val type: Int? = null
+    var type: Int? = null
 
     @SerializedName("amount")
-    val amount: String? = null
+    var amount: String? = null
+
+    constructor(date: String, tid: Int, price: String, type: Int, amount: String) {
+        this.date = date
+        this.tid = tid
+        this.price = price
+        this.type = type
+        this.amount = amount
+    }
+
 }

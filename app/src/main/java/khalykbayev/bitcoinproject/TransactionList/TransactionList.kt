@@ -7,50 +7,56 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.android.android_app.Adapter.RecyclerTouchListener
 import khalykbayev.bitcoinproject.Adapter.TransactionListAdapter
-import khalykbayev.bitcoinproject.Api.BitstampApi
 import khalykbayev.bitcoinproject.App
-import khalykbayev.bitcoinproject.Auth.AuthActivity
 import khalykbayev.bitcoinproject.Models.Transaction
-
 import khalykbayev.bitcoinproject.R
-//import okhttp3.*
 import retrofit2.*
 import retrofit2.Response
-import java.io.IOException
+import androidx.recyclerview.widget.DividerItemDecoration
 
 class TransactionList : Fragment() {
 
     companion object {
-        private const val TAG = "TransactionListActivity"
+        private const val TAG = "TransactionListFragment"
     }
-
     private lateinit var viewModel: TransactionListViewModel
     private var transactionList: ArrayList<Transaction> = ArrayList()
-    lateinit var listView: ListView
+    lateinit var transactionRecyclerView: RecyclerView
+    lateinit var adapter: TransactionListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        Log.d(TAG, "onCreateView")
         val root = inflater.inflate(R.layout.transaction_list_fragment, container, false)
 
-        val adapter = TransactionListAdapter(root.context,transactionList)
+        transactionRecyclerView = root.findViewById(R.id.transactions_list)
+        transactionRecyclerView.layoutManager = LinearLayoutManager(context)
+        transactionRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                transactionRecyclerView.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
-        listView = root.findViewById(R.id.transactions_listview)
-        adapter.notifyDataSetChanged()
-        listView.adapter = adapter
-        listView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                val itemValue = listView.getItemAtPosition(position) as String
-                Toast.makeText(context,
-                    "Position :$position\nItem Value : $itemValue", Toast.LENGTH_LONG)
-                    .show()
+        transactionRecyclerView.addOnItemTouchListener(RecyclerTouchListener(activity!!.applicationContext, transactionRecyclerView, object : RecyclerTouchListener.ClickListener {
+            override fun onClick(view: View, position: Int) {
+                val id = adapter.getId(position)
+                Toast.makeText(activity, "click : $position, :id: $id", Toast.LENGTH_SHORT).show()
             }
+
+            override fun onLongClick(view: View?, position: Int) {
+                Toast.makeText(activity, "LongPress : $position", Toast.LENGTH_SHORT).show()
+            }
+        }))
+
         return root
     }
 
@@ -67,13 +73,14 @@ class TransactionList : Fragment() {
                 if (response.code() == 200) {
                     val response = response.body()!!
                     transactionList = response
-                    listView.invalidateViews()
-                    Log.d(TAG, "bodybody success count:${transactionList.count()}")
-                    Log.d(TAG, "bodybody success 2:${transactionList[2].amount}")
+                    adapter = TransactionListAdapter(transactionList)
+                    transactionRecyclerView.adapter = adapter
+                    adapter.refresh()
+                    Log.d(TAG, "bodybody success count:${response.count()}")
                 }
             }
             override fun onFailure(call: Call<ArrayList<Transaction>>, t: Throwable) {
-                Log.d(TAG, "bodybody onFailure")
+                Log.d(TAG, "bodybody onFailure: ${t.localizedMessage}")
             }
         })
 
