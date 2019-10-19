@@ -14,7 +14,8 @@
         app:title="test"
         app:titleTextColor="@color/colorWhite"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/frame_layout">
+        app:layout_constraintBottom_toTopOf="@id/frame_layout"
+        android:theme="@style/ToolbarStyle">
 
     </androidx.appcompat.widget.Toolbar>
 
