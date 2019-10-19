@@ -8,12 +8,26 @@
     tools:context=".Auth.AuthActivity">
 
 
+    <ImageView
+        android:id="@+id/login_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/login_background"
+        android:scaleType="centerCrop"
+        android:elevation="0dp"
+        android:tint="#40000000"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"/>
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_please_login"
         android:layout_width="220dp"
         android:layout_height="200dp"
-        app:cardBackgroundColor="@color/gray"
-
+        app:cardBackgroundColor="@color/white_smoke"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,17 +129,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edittext_password"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView
-            android:id="@+id/login_background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="0dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/login_background"
-            android:tint="#40000000"
-
-            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

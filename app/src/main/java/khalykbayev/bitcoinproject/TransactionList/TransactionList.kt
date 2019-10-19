@@ -15,6 +15,7 @@ import khalykbayev.bitcoinproject.Adapter.TransactionListAdapter
 import khalykbayev.bitcoinproject.Models.Transaction
 import khalykbayev.bitcoinproject.R
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.l4digital.fastscroll.FastScrollRecyclerView
 import khalykbayev.bitcoinproject.ObservableTransactionArrayList
 import kotlin.collections.ArrayList
 
@@ -26,7 +27,7 @@ class TransactionList : Fragment() {
         private const val TAG = "TransactionListFragment"
     }
     private lateinit var viewModel: TransactionListViewModel
-    lateinit var transactionRecyclerView: RecyclerView
+    lateinit var transactionRecyclerView: FastScrollRecyclerView
     lateinit var adapter: TransactionListAdapter
 
     override fun onCreateView(
@@ -37,7 +38,7 @@ class TransactionList : Fragment() {
         Log.d(TAG, "onCreateView")
         val root = inflater.inflate(R.layout.transaction_list_fragment, container, false)
 
-        transactionRecyclerView = root.findViewById(R.id.transactions_list)
+        transactionRecyclerView = root.findViewById(R.id.recycler_view)
         transactionRecyclerView.layoutManager = LinearLayoutManager(context)
         transactionRecyclerView.addItemDecoration(
             DividerItemDecoration(
@@ -65,7 +66,7 @@ class TransactionList : Fragment() {
         viewModel = ViewModelProviders.of(this).get(TransactionListViewModel::class.java)
         Log.d(TAG, "onActivityCreated")
         setListener()
-        viewModel.loadTransactions(500)
+        viewModel.loadTransactions(200)
 
     }
 

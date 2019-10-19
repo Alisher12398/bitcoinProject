@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.l4digital.fastscroll.FastScroller
 import com.squareup.picasso.Picasso
 import khalykbayev.bitcoinproject.Models.Transaction
 import khalykbayev.bitcoinproject.R
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.transaction_list_item.view.*
 import kotlin.collections.ArrayList
 
 
-class TransactionListAdapter(var transactions:ArrayList<Transaction>): RecyclerView.Adapter<TransactionListAdapter.ViewHolder>(){
+class TransactionListAdapter(var transactions:ArrayList<Transaction>): RecyclerView.Adapter<TransactionListAdapter.ViewHolder>(), FastScroller.SectionIndexer {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
@@ -28,6 +29,7 @@ class TransactionListAdapter(var transactions:ArrayList<Transaction>): RecyclerV
             holder.view.setBackgroundResource(R.color.red)
             type = "Покупка"
         } else if (transactions[position].type == 1) {
+            holder.view.setBackgroundResource(R.color.green)
             type = "Продажа"
         }
         holder.type.text = type
@@ -49,6 +51,11 @@ class TransactionListAdapter(var transactions:ArrayList<Transaction>): RecyclerV
     override fun getItemCount(): Int {
         return transactions.size
     }
+
+    override fun getSectionText(position: Int): CharSequence {
+        return (position + 1).toString()
+    }
+
 
     fun refresh() {
         notifyDataSetChanged()
