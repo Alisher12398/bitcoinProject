@@ -7,7 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.android_app.Adapter.RecyclerTouchListener
@@ -17,6 +21,7 @@ import khalykbayev.bitcoinproject.R
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.l4digital.fastscroll.FastScrollRecyclerView
 import khalykbayev.bitcoinproject.ObservableTransactionArrayList
+import kotlinx.android.synthetic.main.transaction_list_fragment.*
 import kotlin.collections.ArrayList
 
 
@@ -30,6 +35,16 @@ class TransactionList : Fragment() {
     lateinit var transactionRecyclerView: FastScrollRecyclerView
     lateinit var adapter: TransactionListAdapter
 
+    lateinit var detail_constraint: ConstraintLayout
+    lateinit var detail_background_button: Button
+    lateinit var detail_card_image: ImageView
+    lateinit var detail_card_close_button: Button
+    lateinit var detail_card_id_value: TextView
+    lateinit var detail_card_date_value: TextView
+    lateinit var detail_card_type_value: TextView
+    lateinit var detail_card_price_value: TextView
+    lateinit var detail_card_amount_value: TextView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +53,16 @@ class TransactionList : Fragment() {
         Log.d(TAG, "onCreateView")
         val root = inflater.inflate(R.layout.transaction_list_fragment, container, false)
 
+        detail_constraint = root.findViewById(R.id.detail_constraint)
+        detail_background_button = root.findViewById(R.id.detail_background_button)
+        detail_card_image = root.findViewById(R.id.detail_card_image)
+        detail_card_close_button = root.findViewById(R.id.detail_card_close_button)
+        detail_card_id_value = root.findViewById(R.id.detail_card_id_value)
+        detail_card_date_value = root.findViewById(R.id.detail_card_date_value)
+        detail_card_type_value = root.findViewById(R.id.detail_card_type_value)
+        detail_card_price_value = root.findViewById(R.id.detail_card_price_value)
+        detail_card_amount_value = root.findViewById(R.id.detail_card_amount_value)
+        
         transactionRecyclerView = root.findViewById(R.id.recycler_view)
         transactionRecyclerView.layoutManager = LinearLayoutManager(context)
         transactionRecyclerView.addItemDecoration(
