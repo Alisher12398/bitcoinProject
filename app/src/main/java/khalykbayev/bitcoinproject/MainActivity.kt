@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.firebase.auth.FirebaseAuth
+import khalykbayev.bitcoinproject.Adapter.TransactionListAdapter
 import khalykbayev.bitcoinproject.Auth.AuthActivity
 import khalykbayev.bitcoinproject.Converter.ConverterFragment
 import khalykbayev.bitcoinproject.ExchangeRates.ExchangeRates
@@ -55,19 +56,23 @@ class MainActivity : BaseActivity() {
             .hide(converterFragment)
             .hide(exchangeRatesFragment)
             .commit()
+        toolbar.menu.clear()
 
         when (itemId) {
             R.id.navigation_exchange_rates -> {
                 toolbar.setTitle(R.string.title_exchange_rates)
                 supportFragmentManager.beginTransaction().show(exchangeRatesFragment).commit()
+                toolbar.inflateMenu(R.menu.navbar_menu)
             }
             R.id.navigation_transaction_list -> {
                 toolbar.setTitle(R.string.title_transaction_list)
                 supportFragmentManager.beginTransaction().show(transactionListFragment).commit()
+                toolbar.inflateMenu(R.menu.menu_transaction_list)
             }
             R.id.navigation_converter -> {
                 toolbar.setTitle(R.string.title_converter)
                 supportFragmentManager.beginTransaction().show(converterFragment).commit()
+                toolbar.inflateMenu(R.menu.navbar_menu)
             }
         }
     }
@@ -78,10 +83,15 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.toolbar_logout){
-            val intent = Intent(this, AuthActivity::class.java)
-            FirebaseAuth.getInstance().signOut()
-            startActivity(intent)
+        when(item.itemId) {
+            R.id.toolbar_logout -> {
+                val intent = Intent(this, AuthActivity::class.java)
+                FirebaseAuth.getInstance().signOut()
+                startActivity(intent)
+            }
+            R.id.toolbar_transaction_list_refresh -> {
+                transactionListFragment.refresh()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

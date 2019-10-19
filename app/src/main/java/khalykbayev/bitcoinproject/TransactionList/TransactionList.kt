@@ -85,4 +85,9 @@ class TransactionList : Fragment() {
             }
         })
     }
+
+    fun refresh() {
+        viewModel?.loadTransactions(200)
+    }
+
 }
