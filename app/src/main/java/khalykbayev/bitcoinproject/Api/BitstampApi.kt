@@ -13,7 +13,7 @@ import kotlin.collections.ArrayList
 
 
 interface BitstampApi {
-    @GET("transactions")
+    @GET("transactions/btcusd/")
     fun getTransactionList(@Query("time") time: String): Call<ArrayList<Transaction>>
 
 //    companion object Factory {

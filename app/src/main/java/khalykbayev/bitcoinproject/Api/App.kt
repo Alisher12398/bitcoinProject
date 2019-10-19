@@ -1,7 +1,6 @@
-package khalykbayev.bitcoinproject
+package khalykbayev.bitcoinproject.Api
 
 import android.app.Application
-import khalykbayev.bitcoinproject.Api.BitstampApi
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -37,7 +36,7 @@ class App : Application() {
         val retrofit = Retrofit.Builder()
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("https://www.bitstamp.net/api/")
+        .baseUrl("https://www.bitstamp.net/api/v2/")
         .build()
         var api: BitstampApi = retrofit.create(BitstampApi::class.java)
     }

@@ -12,16 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.android_app.Adapter.RecyclerTouchListener
 import khalykbayev.bitcoinproject.Adapter.TransactionListAdapter
-import khalykbayev.bitcoinproject.App
 import khalykbayev.bitcoinproject.Models.Transaction
 import khalykbayev.bitcoinproject.R
-import retrofit2.*
-import retrofit2.Response
 import androidx.recyclerview.widget.DividerItemDecoration
-import khalykbayev.bitcoinproject.BaseActivity
-import khalykbayev.bitcoinproject.MainActivity
 import khalykbayev.bitcoinproject.ObservableTransactionArrayList
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -80,7 +74,7 @@ class TransactionList : Fragment() {
                 if (viewModel.transactionList.getList().count() == 0) {
                     Toast.makeText(context, "0", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "   ne 0   ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "   ne 0: ${viewModel.transactionList.getList().count()}", Toast.LENGTH_SHORT).show()
                 }
             }
         })
