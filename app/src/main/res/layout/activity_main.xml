@@ -12,7 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorMenu"
         app:title="test"
-        app:titleTextColor="@color/colorWhite"
+        app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/frame_layout"
         android:theme="@style/ToolbarStyle">
@@ -23,7 +23,7 @@
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/colorWhite"
+        android:background="@color/white"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

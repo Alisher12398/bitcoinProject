@@ -25,6 +25,7 @@ class TransactionListAdapter(var transactions:ArrayList<Transaction>): RecyclerV
 
         var type = ""
         if (transactions[position].type == 0) {
+            holder.view.setBackgroundResource(R.color.red)
             type = "Покупка"
         } else if (transactions[position].type == 1) {
             type = "Продажа"
@@ -59,5 +60,6 @@ class TransactionListAdapter(var transactions:ArrayList<Transaction>): RecyclerV
         var amount: TextView = itemView.transaction_amount
         var number: TextView = itemView.transaction_number
         var image: ImageView = itemView.transaction_image
+        var view: View = itemView.transaction_view
     }
 }

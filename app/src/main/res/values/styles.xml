@@ -9,8 +9,8 @@
     </style>
 
     <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorSecondary">@color/colorWhite</item>
-        <item name="android:tint">@color/colorWhite</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:tint">@color/white</item>
     </style>
 
 
