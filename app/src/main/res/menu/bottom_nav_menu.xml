@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/navigation_exchange_rates"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/icon_exchange_rates"
         android:title="@string/title_exchange_rates"
         android:titleCondensed="Курс"/>
 
     <item
         android:id="@+id/navigation_transaction_list"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/icon_transaction_list"
         android:title="@string/title_transaction_list"
         android:titleCondensed="Транзакции"/>
 
     <item
         android:id="@+id/navigation_converter"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/icon_converter"
         android:title="@string/title_converter"
         android:titleCondensed="Конвертер"/>
 

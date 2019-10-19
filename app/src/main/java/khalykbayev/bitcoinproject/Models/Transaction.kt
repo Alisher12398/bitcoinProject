@@ -2,28 +2,20 @@ package khalykbayev.bitcoinproject.Models
 
 import com.google.gson.annotations.SerializedName
 
-class Transaction {
+class Transaction(date: String, tid: Int, price: String, type: Int, amount: String) {
     @SerializedName("date")
-    var date: String? = null
+    var date: String? = date
 
     @SerializedName("tid")
-    var tid: Int? = null
+    var tid: Int? = tid
 
     @SerializedName("price")
-    var price: String? = null
+    var price: String? = price
 
     @SerializedName("type")
-    var type: Int? = null
+    var type: Int? = type
 
     @SerializedName("amount")
-    var amount: String? = null
-
-    constructor(date: String, tid: Int, price: String, type: Int, amount: String) {
-        this.date = date
-        this.tid = tid
-        this.price = price
-        this.type = type
-        this.amount = amount
-    }
+    var amount: String? = amount
 
 }

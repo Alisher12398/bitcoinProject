@@ -19,7 +19,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     open fun showProgressDialog() {
-        progressDialog.setMessage("Loading")
+        progressDialog.setMessage("Загрузка")
         progressDialog.isIndeterminate = true
         progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
