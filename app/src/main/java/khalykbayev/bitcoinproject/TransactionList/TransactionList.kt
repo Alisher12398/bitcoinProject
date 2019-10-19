@@ -18,6 +18,13 @@ import khalykbayev.bitcoinproject.R
 import retrofit2.*
 import retrofit2.Response
 import androidx.recyclerview.widget.DividerItemDecoration
+import khalykbayev.bitcoinproject.BaseActivity
+import khalykbayev.bitcoinproject.MainActivity
+import khalykbayev.bitcoinproject.ObservableTransactionArrayList
+import java.util.*
+import kotlin.collections.ArrayList
+
+
 
 class TransactionList : Fragment() {
 
@@ -66,23 +73,39 @@ class TransactionList : Fragment() {
         // TODO: Use the ViewModel
         Log.d(TAG, "onActivityCreated")
 
-        App.api.getTransactionList("minute").enqueue(object :
-            Callback<ArrayList<Transaction>> {
+        //viewModel.transactionList.listener()
 
-            override fun onResponse(call: Call<ArrayList<Transaction>>, response: Response<ArrayList<Transaction>>) {
-                if (response.code() == 200) {
-                    val response = response.body()!!
-                    transactionList = response
-                    adapter = TransactionListAdapter(transactionList)
-                    transactionRecyclerView.adapter = adapter
-                    adapter.refresh()
-                    Log.d(TAG, "bodybody success count:${response.count()}")
+        viewModel.transactionList.setListener(object : ObservableTransactionArrayList.ChangeListener {
+            override fun onChange() {
+                if (viewModel.transactionList.getList().count() == 0) {
+                    Toast.makeText(context, "0", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "   ne 0   ", Toast.LENGTH_SHORT).show()
                 }
             }
-            override fun onFailure(call: Call<ArrayList<Transaction>>, t: Throwable) {
-                Log.d(TAG, "bodybody onFailure: ${t.localizedMessage}")
-            }
         })
+
+        viewModel.loadTransactions(300)
+
+        //MainActivity().showProgressDialog()
+
+//        App.api.getTransactionList("minute").enqueue(object :
+//            Callback<ArrayList<Transaction>> {
+//
+//            override fun onResponse(call: Call<ArrayList<Transaction>>, response: Response<ArrayList<Transaction>>) {
+//                if (response.code() == 200) {
+//                    val response = response.body()!!
+//                    transactionList = response
+//                    adapter = TransactionListAdapter(transactionList)
+//                    transactionRecyclerView.adapter = adapter
+//                    adapter.refresh()
+//                    Log.d(TAG, "bodybody success count:${response.count()}")
+//                }
+//            }
+//            override fun onFailure(call: Call<ArrayList<Transaction>>, t: Throwable) {
+//                Log.d(TAG, "bodybody onFailure: ${t.localizedMessage}")
+//            }
+//        })
 
     }
 
@@ -91,5 +114,19 @@ class TransactionList : Fragment() {
         Log.d(TAG, "onStart")
 
     }
+
+    //val array: ArrayList<Transaction> = ArrayList()
+
+//    override fun onResume() {
+//        super.onResume()
+//        Log.d(TAG, "onResume()")
+//        array.add(Transaction("dsf", 5, "sdf", 0, "2344"))
+//        viewModel.transactionList.setList(array)
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        Log.d(TAG, "onPause()")
+//    }
 
 }

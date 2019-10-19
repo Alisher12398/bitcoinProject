@@ -4,6 +4,7 @@ package khalykbayev.bitcoinproject
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.VisibleForTesting
@@ -17,9 +18,10 @@ open class BaseActivity : AppCompatActivity() {
         //
     }
 
-    fun showProgressDialog() {
+    open fun showProgressDialog() {
         progressDialog.setMessage("Loading")
         progressDialog.isIndeterminate = true
+        progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
     }
 

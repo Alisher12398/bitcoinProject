@@ -13,7 +13,7 @@ import khalykbayev.bitcoinproject.Converter.ConverterFragment
 import khalykbayev.bitcoinproject.ExchangeRates.ExchangeRates
 import khalykbayev.bitcoinproject.TransactionList.TransactionList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val transactionListFragment = TransactionList()
     private val converterFragment : Fragment = ConverterFragment()
@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         toolbar = findViewById(R.id.toolbar_main_activity)
         bottomNavigationView = findViewById(R.id.nav_view)
 
