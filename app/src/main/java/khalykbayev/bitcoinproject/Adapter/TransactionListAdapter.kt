@@ -34,8 +34,6 @@ class TransactionListAdapter(var transactions:ArrayList<Transaction>): RecyclerV
         }
         holder.type.text = type
         holder.number.text = (position + 1).toString() + "."
-
-        //Picasso.get().load("https://source.unsplash.com/random/300x300").into(holder.image)
     }
 
     fun getId(position: Int): Int? {
