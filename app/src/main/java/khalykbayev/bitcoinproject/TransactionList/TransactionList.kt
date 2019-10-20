@@ -29,6 +29,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
 import android.content.Intent
+import java.lang.Exception
 
 
 class TransactionList : Fragment() {
@@ -52,6 +53,7 @@ class TransactionList : Fragment() {
     lateinit var detailCardPriceValue: TextView
     lateinit var detailCardAmountValue: TextView
     lateinit var detailCardShareButton: Button
+    lateinit var loadingTextview: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,12 +75,14 @@ class TransactionList : Fragment() {
         setListeners()
         hideDetailView()
         viewModel.loadTransactions(200)
-
+        loadingTextview.isVisible = true
     }
 
     override fun onStart() {
         super.onStart()
-        tinydb = TinyDB(context!!)
+        try {
+            tinydb = TinyDB(context!!)
+        } catch (e: Exception) {}
         loadImages()
         Log.d(TAG, "onStart")
 
@@ -89,6 +93,8 @@ class TransactionList : Fragment() {
             override fun onChange() {
                 adapter = TransactionListAdapter(viewModel.transactionList.getList())
                 transactionRecyclerView.adapter = adapter
+                loadingTextview.isVisible = viewModel.transactionList.getList().count() == 0
+
             }
         })
 
@@ -122,6 +128,7 @@ class TransactionList : Fragment() {
         detailCardPriceValue = root.findViewById(R.id.detail_card_price_value)
         detailCardAmountValue = root.findViewById(R.id.detail_card_amount_value)
         detailCardShareButton = root.findViewById(R.id.detail_card_share_button)
+        loadingTextview = root.findViewById(R.id.loading_textview)
 
         transactionRecyclerView = root.findViewById(R.id.recycler_view)
         transactionRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -149,7 +156,10 @@ class TransactionList : Fragment() {
     private val key = "key"
 
     fun getImageUrl(): String {
-        val list = tinydb.getListString(key)
+        var list: ArrayList<String> = ArrayList()
+        try {
+            list = tinydb.getListString(key)
+        } catch (e: Exception) {}
         val randomInt = (0 until list.count()).random()
         return list[randomInt]
     }
@@ -170,7 +180,9 @@ class TransactionList : Fragment() {
                             list.add(response.body()!![i].url!!)
                         }
                     }
-                    tinydb.putListString("key", list)
+                    try {
+                        tinydb.putListString("key", list)
+                    } catch (e: Exception) {}
                 }
             }
             override fun onFailure(call: Call<ArrayList<PicsumImage>>, t: Throwable) {
@@ -192,6 +204,7 @@ class TransactionList : Fragment() {
 
     private fun getSelectedTransactionInfo(position: Int) {
         val transaction = viewModel.transactionList.getList()[position]
+        Picasso.get().load(getImageUrl()).into(detailCardImage)
         detailCardAmountValue.text = transaction.amount
         detailCardIdValue.text = transaction.tid.toString()
         detailCardPriceValue.text = transaction.price
@@ -203,7 +216,6 @@ class TransactionList : Fragment() {
         } else {
             detailCardTypeValue.text = "Продажа"
         }
-        Picasso.get().load(getImageUrl()).into(detailCardImage)
     }
 
 }
