@@ -9,22 +9,15 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.*
 import io.reactivex.Observable
+import khalykbayev.bitcoinproject.Models.PicsumImage
 import kotlin.collections.ArrayList
 
 
-interface BitstampApi {
+interface Api {
     @GET("transactions/btcusd/")
     fun getTransactionList(@Query("time") time: String): Call<ArrayList<Transaction>>
 
-//    companion object Factory {
-//        fun create(): BitstampApi {
-//            val retrofit = Retrofit.Builder()
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .baseUrl("https://www.bitstamp.net/api/")
-//                .build()
-//
-//            return retrofit.create(BitstampApi::class.java)
-//        }
-//    }
+    @GET("list?page=2&limit=100")
+    fun getPicsumImageList(): Call<ArrayList<PicsumImage>>
+
 }

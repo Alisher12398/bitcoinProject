@@ -19,11 +19,12 @@ import khalykbayev.bitcoinproject.Converter.ConverterFragment
 import khalykbayev.bitcoinproject.ExchangeRates.ExchangeRates
 import khalykbayev.bitcoinproject.TransactionList.TransactionList
 
+
 class MainActivity : BaseActivity() {
 
-    private val transactionListFragment = TransactionList()
-    private val converterFragment : Fragment = ConverterFragment()
-    private val exchangeRatesFragment : Fragment = ExchangeRates()
+    private var transactionListFragment = TransactionList()
+    private var converterFragment : Fragment = ConverterFragment()
+    private var exchangeRatesFragment : Fragment = ExchangeRates()
     private lateinit var toolbar: Toolbar
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -37,9 +38,9 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.frame_layout, exchangeRatesFragment)
-            .add(R.id.frame_layout, transactionListFragment)
-            .add(R.id.frame_layout, converterFragment)
+            .add(R.id.frame_layout, exchangeRatesFragment).hide(exchangeRatesFragment)
+            .add(R.id.frame_layout, transactionListFragment).hide(transactionListFragment)
+            .add(R.id.frame_layout, converterFragment).hide(converterFragment)
             .commit()
 
         showItem(R.id.navigation_exchange_rates)

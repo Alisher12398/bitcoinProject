@@ -24,10 +24,9 @@ import com.l4digital.fastscroll.FastScrollRecyclerView
 import com.squareup.picasso.Picasso
 import khalykbayev.bitcoinproject.ObservableTransactionArrayList
 import khalykbayev.bitcoinproject.getDate
+import khalykbayev.bitcoinproject.readFromFile
 import kotlinx.android.synthetic.main.transaction_list_fragment.*
 import kotlin.collections.ArrayList
-
-
 
 class TransactionList : Fragment() {
 
@@ -48,6 +47,11 @@ class TransactionList : Fragment() {
     lateinit var detail_card_price_value: TextView
     lateinit var detail_card_amount_value: TextView
     lateinit var detail_card_share_button: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -83,14 +87,13 @@ class TransactionList : Fragment() {
 
         transactionRecyclerView.addOnItemTouchListener(RecyclerTouchListener(activity!!.applicationContext, transactionRecyclerView, object : RecyclerTouchListener.ClickListener {
             override fun onClick(view: View, position: Int) {
-                val id = adapter.getId(position)
-                Toast.makeText(activity, "click : $position, :id: $id", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(activity, "click : $position, :id: $id", Toast.LENGTH_SHORT).show()
                 val transaction = viewModel.transactionList.getList()[position]
                 detail_card_amount_value.text = transaction.amount
                 detail_card_id_value.text = transaction.tid.toString()
                 detail_card_price_value.text = transaction.price
                 if (transaction.date != null) {
-                    detail_card_date_value.text = getDate(transaction.date!!.toLong(), "dd:MM:yyyy HH:mm:ss")
+                    detail_card_date_value.text = getDate(transaction.date!!.toLong() * 1000, "dd:MM:yyyy HH:mm:ss")
                 }
                 if (transaction.type == 0) {
                     detail_card_type_value.text = "Покупка"
@@ -102,6 +105,7 @@ class TransactionList : Fragment() {
             }
 
             override fun onLongClick(view: View?, position: Int) {
+                readFromFile("name.json")
                 //Toast.makeText(activity, "LongPress : $position", Toast.LENGTH_SHORT).show()
             }
         }))

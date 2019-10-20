@@ -17,6 +17,11 @@ class ExchangeRates : Fragment() {
 
     private lateinit var viewModel: ExchangeRatesViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

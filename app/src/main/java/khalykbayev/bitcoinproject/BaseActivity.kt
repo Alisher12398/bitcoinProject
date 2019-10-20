@@ -4,6 +4,7 @@ package khalykbayev.bitcoinproject
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -40,4 +41,5 @@ open class BaseActivity : AppCompatActivity() {
         super.onStop()
         hideProgressDialog()
     }
+
 }
