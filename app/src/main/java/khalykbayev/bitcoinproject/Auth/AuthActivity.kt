@@ -67,7 +67,7 @@ class AuthActivity : BaseActivity() {
                     finish()
                 } else {
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.makeText(baseContext, "Ошибка регистрации.",
                         Toast.LENGTH_SHORT).show()
                 }
                 hideProgressDialog()
@@ -92,7 +92,7 @@ class AuthActivity : BaseActivity() {
 
                 } else {
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.makeText(baseContext, "Ошибка авторизации.",
                         Toast.LENGTH_SHORT).show()
                 }
                 hideProgressDialog()
@@ -104,13 +104,13 @@ class AuthActivity : BaseActivity() {
 
         val email = edittext_email.text.toString()
         if (TextUtils.isEmpty(email)) {
-            val toast = Toast.makeText(this, "Empty Email", Toast.LENGTH_LONG).show()
+            val toast = Toast.makeText(this, "Пустое поле с Email", Toast.LENGTH_LONG).show()
             valid = false
         }
 
         val password = edittext_password.text.toString()
         if (TextUtils.isEmpty(password)) {
-            val toast = Toast.makeText(this, "Empy Password", Toast.LENGTH_LONG).show()
+            val toast = Toast.makeText(this, "Пустое поле с паролем", Toast.LENGTH_LONG).show()
             valid = false
         }
 
