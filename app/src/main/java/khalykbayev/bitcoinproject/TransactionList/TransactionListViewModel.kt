@@ -32,7 +32,6 @@ class TransactionListViewModel : ViewModel() {
         private const val TAG = "TransactionListViewModel"
     }
 
-    //var transactionList: ArrayList<Transaction> = ArrayList()
     var transactionList = ObservableTransactionArrayList()
 
     fun loadTransactions(count: Int) {

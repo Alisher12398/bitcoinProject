@@ -14,10 +14,8 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.android_app.Adapter.RecyclerTouchListener
 import khalykbayev.bitcoinproject.Adapter.TransactionListAdapter
-import khalykbayev.bitcoinproject.Models.Transaction
 import khalykbayev.bitcoinproject.R
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.l4digital.fastscroll.FastScrollRecyclerView
@@ -27,11 +25,12 @@ import khalykbayev.bitcoinproject.Api.App
 import khalykbayev.bitcoinproject.Models.PicsumImage
 import khalykbayev.bitcoinproject.ObservableTransactionArrayList
 import khalykbayev.bitcoinproject.getDate
-import kotlinx.android.synthetic.main.transaction_list_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
+import android.content.Intent
+
 
 class TransactionList : Fragment() {
 
@@ -96,7 +95,6 @@ class TransactionList : Fragment() {
 
         transactionRecyclerView.addOnItemTouchListener(RecyclerTouchListener(activity!!.applicationContext, transactionRecyclerView, object : RecyclerTouchListener.ClickListener {
             override fun onClick(view: View, position: Int) {
-                //Toast.makeText(activity, "click : $position, :id: $id", Toast.LENGTH_SHORT).show()
                 val transaction = viewModel.transactionList.getList()[position]
                 detail_card_amount_value.text = transaction.amount
                 detail_card_id_value.text = transaction.tid.toString()
@@ -113,14 +111,17 @@ class TransactionList : Fragment() {
                 showDetailView()
             }
 
-            override fun onLongClick(view: View?, position: Int) {
-                //Toast.makeText(activity, "LongPress : $position", Toast.LENGTH_SHORT).show()
-            }
+            override fun onLongClick(view: View?, position: Int) {}
         }))
 
         detail_card_close_button.setOnClickListener {
             hideDetailView()
         }
+
+        detail_card_share_button.setOnClickListener {
+            share()
+        }
+
     }
 
     private fun configureView(root: View) {
@@ -190,4 +191,16 @@ class TransactionList : Fragment() {
             }
         })
     }
+
+    private fun share() {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        val shareBody: String = "Транзакция:\n" +
+                "Тип: ${detail_card_type_value.text}" + "\n" +
+                "Время: ${detail_card_date_value.text}" + "\n" +
+                "Сумма: ${detail_card_amount_value.text}" + "\n"
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+        startActivity(Intent.createChooser(sharingIntent, "Поделиться"))
+    }
+
 }
