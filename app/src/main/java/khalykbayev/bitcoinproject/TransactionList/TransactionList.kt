@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,16 +42,16 @@ class TransactionList : Fragment() {
 
     lateinit var tinydb: TinyDB
 
-    lateinit var detail_constraint: ConstraintLayout
-    lateinit var detail_background_button: Button
-    lateinit var detail_card_image: ImageView
-    lateinit var detail_card_close_button: Button
-    lateinit var detail_card_id_value: TextView
-    lateinit var detail_card_date_value: TextView
-    lateinit var detail_card_type_value: TextView
-    lateinit var detail_card_price_value: TextView
-    lateinit var detail_card_amount_value: TextView
-    lateinit var detail_card_share_button: Button
+    lateinit var detailConstraint: ConstraintLayout
+    lateinit var detailBackgroundButton: Button
+    lateinit var detailCardImage: ImageView
+    lateinit var detailCardCloseButton: Button
+    lateinit var detailCardIdValue: TextView
+    lateinit var detailCardDateValue: TextView
+    lateinit var detailCardTypeValue: TextView
+    lateinit var detailCardPriceValue: TextView
+    lateinit var detailCardAmountValue: TextView
+    lateinit var detailCardShareButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,46 +94,34 @@ class TransactionList : Fragment() {
 
         transactionRecyclerView.addOnItemTouchListener(RecyclerTouchListener(activity!!.applicationContext, transactionRecyclerView, object : RecyclerTouchListener.ClickListener {
             override fun onClick(view: View, position: Int) {
-                val transaction = viewModel.transactionList.getList()[position]
-                detail_card_amount_value.text = transaction.amount
-                detail_card_id_value.text = transaction.tid.toString()
-                detail_card_price_value.text = transaction.price
-                if (transaction.date != null) {
-                    detail_card_date_value.text = getDate(transaction.date!!.toLong() * 1000, "dd:MM:yyyy HH:mm:ss")
-                }
-                if (transaction.type == 0) {
-                    detail_card_type_value.text = "Покупка"
-                } else {
-                    detail_card_type_value.text = "Продажа"
-                }
-                Picasso.get().load(getImageUrl()).into(detail_card_image)
+                getSelectedTransactionInfo(position)
                 showDetailView()
             }
 
             override fun onLongClick(view: View?, position: Int) {}
         }))
 
-        detail_card_close_button.setOnClickListener {
+        detailCardCloseButton.setOnClickListener {
             hideDetailView()
         }
 
-        detail_card_share_button.setOnClickListener {
+        detailCardShareButton.setOnClickListener {
             share()
         }
 
     }
 
     private fun configureView(root: View) {
-        detail_constraint = root.findViewById(R.id.detail_constraint)
-        detail_background_button = root.findViewById(R.id.detail_background_button)
-        detail_card_image = root.findViewById(R.id.detail_card_image)
-        detail_card_close_button = root.findViewById(R.id.detail_card_close_button)
-        detail_card_id_value = root.findViewById(R.id.detail_card_id_value)
-        detail_card_date_value = root.findViewById(R.id.detail_card_date_value)
-        detail_card_type_value = root.findViewById(R.id.detail_card_type_value)
-        detail_card_price_value = root.findViewById(R.id.detail_card_price_value)
-        detail_card_amount_value = root.findViewById(R.id.detail_card_amount_value)
-        detail_card_share_button = root.findViewById(R.id.detail_card_share_button)
+        detailConstraint = root.findViewById(R.id.detail_constraint)
+        detailBackgroundButton = root.findViewById(R.id.detail_background_button)
+        detailCardImage = root.findViewById(R.id.detail_card_image)
+        detailCardCloseButton = root.findViewById(R.id.detail_card_close_button)
+        detailCardIdValue = root.findViewById(R.id.detail_card_id_value)
+        detailCardDateValue = root.findViewById(R.id.detail_card_date_value)
+        detailCardTypeValue = root.findViewById(R.id.detail_card_type_value)
+        detailCardPriceValue = root.findViewById(R.id.detail_card_price_value)
+        detailCardAmountValue = root.findViewById(R.id.detail_card_amount_value)
+        detailCardShareButton = root.findViewById(R.id.detail_card_share_button)
 
         transactionRecyclerView = root.findViewById(R.id.recycler_view)
         transactionRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -147,11 +134,11 @@ class TransactionList : Fragment() {
     }
 
     private fun showDetailView() {
-        detail_constraint.isVisible = true
+        detailConstraint.isVisible = true
     }
 
     private fun hideDetailView() {
-        detail_constraint.isVisible = false
+        detailConstraint.isVisible = false
     }
 
 
@@ -196,11 +183,27 @@ class TransactionList : Fragment() {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
         val shareBody: String = "Транзакция:\n" +
-                "Тип: ${detail_card_type_value.text}" + "\n" +
-                "Время: ${detail_card_date_value.text}" + "\n" +
-                "Сумма: ${detail_card_amount_value.text}" + "\n"
+                "Тип: ${detailCardTypeValue.text}" + "\n" +
+                "Время: ${detailCardDateValue.text}" + "\n" +
+                "Сумма: ${detailCardAmountValue.text}" + "\n"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
         startActivity(Intent.createChooser(sharingIntent, "Поделиться"))
+    }
+
+    private fun getSelectedTransactionInfo(position: Int) {
+        val transaction = viewModel.transactionList.getList()[position]
+        detailCardAmountValue.text = transaction.amount
+        detailCardIdValue.text = transaction.tid.toString()
+        detailCardPriceValue.text = transaction.price
+        if (transaction.date != null) {
+            detailCardDateValue.text = getDate(transaction.date!!.toLong() * 1000, "dd:MM:yyyy HH:mm:ss")
+        }
+        if (transaction.type == 0) {
+            detailCardTypeValue.text = "Покупка"
+        } else {
+            detailCardTypeValue.text = "Продажа"
+        }
+        Picasso.get().load(getImageUrl()).into(detailCardImage)
     }
 
 }
