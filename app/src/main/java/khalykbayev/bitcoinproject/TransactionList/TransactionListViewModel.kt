@@ -1,5 +1,6 @@
 package khalykbayev.bitcoinproject.TransactionList
 
+import android.content.Context
 import android.util.JsonWriter
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -15,7 +16,14 @@ import org.json.JSONObject
 import retrofit2.*
 import com.google.gson.JsonObject
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import khalykbayev.bitcoinproject.writeToFile
+import android.content.SharedPreferences
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import java.io.File
+import java.io.FileOutputStream
+import khalykbayev.bitcoinproject.Adapter.TinyDB
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 class TransactionListViewModel : ViewModel() {
@@ -23,9 +31,9 @@ class TransactionListViewModel : ViewModel() {
     companion object {
         private const val TAG = "TransactionListViewModel"
     }
+
     //var transactionList: ArrayList<Transaction> = ArrayList()
     var transactionList = ObservableTransactionArrayList()
-    //var transactionListObserver: Observa
 
     fun loadTransactions(count: Int) {
         App.bitstampApi.getTransactionList("hour").enqueue(object :
@@ -36,7 +44,6 @@ class TransactionListViewModel : ViewModel() {
                 if (response.code() == 200) {
                     Log.d(TAG, "getTransactionList onResponse 200, count: ${response.body()!!.count()}")
                     transactionList.setList(filterTransactionList(response.body()!!, count))
-                    loadImages()
                 }
             }
             override fun onFailure(call: Call<ArrayList<Transaction>>, t: Throwable) {
@@ -45,24 +52,6 @@ class TransactionListViewModel : ViewModel() {
         })
     }
 
-    fun loadImages() {
-        App.picsumApi.getPicsumImageList().enqueue(object :
-            Callback<ArrayList<PicsumImage>> {
-
-            override fun onResponse(call: Call<ArrayList<PicsumImage>>, response: Response<ArrayList<PicsumImage>>) {
-                Log.d(TAG, "getPicsumImageList onResponse")
-                if (response.code() == 200) {
-                    Log.d(TAG, "getPicsumImageList onResponse 200, count: ${response.body()!!.count()}")
-                    val json = Gson().toJson(response.body()!!)
-                    //val jsonObject = JsonParser().parse(json).asJsonObject
-                    writeToFile(json)
-                }
-            }
-            override fun onFailure(call: Call<ArrayList<PicsumImage>>, t: Throwable) {
-                Log.d(TAG, "getPicsumImageList onFailure:${t.localizedMessage}")
-            }
-        })
-    }
 
     private fun filterTransactionList(list: ArrayList<Transaction>, count: Int): ArrayList<Transaction> {
         val result: ArrayList<Transaction> = ArrayList()

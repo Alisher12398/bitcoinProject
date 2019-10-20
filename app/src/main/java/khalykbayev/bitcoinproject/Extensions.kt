@@ -20,39 +20,35 @@ fun getDate(milliSeconds: Long, dateFormat: String): String {
     calendar.timeInMillis = milliSeconds
     return formatter.format(calendar.time)
 }
-
-fun writeToFile(data: String) {
-    try {
-        val fos = FileOutputStream(data)
-        val outputStreamWriter = OutputStreamWriter(fos)
-        outputStreamWriter.write(data)
-        Log.d("Exception read", "SUCCESS")
-        outputStreamWriter.close()
-    } catch (e: IOException) {
-        Log.d("Exception read", "File write failed: " + e.toString())
-    }
-
-}
-
-
-fun readFromFile(path: String): String {
-    var ret = ""
-    try {
-        val inputStream = FileInputStream(File(path))
-
-        val inputStreamReader = InputStreamReader(inputStream)
-        val bufferedReader = BufferedReader(inputStreamReader)
-        val stringBuilder = StringBuilder()
-        for (char in bufferedReader.readLine()) {
-            stringBuilder.append(char)
-        }
-        inputStream.close()
-        ret = stringBuilder.toString()
-    } catch (e: FileNotFoundException) {
-        Log.e("Exception read", "File not found: $e")
-    } catch (e: IOException) {
-        Log.e("Exception read", "Can not read file: $e")
-    }
-
-    return ret
-}
+//
+//fun writeToFile(data: String) {
+//    try {
+//        val fos = FileOutputStream(data)
+//        val outputStreamWriter = OutputStreamWriter(fos)
+//        outputStreamWriter.write(data)
+//        Log.d("Exception read", "SUCCESS")
+//        outputStreamWriter.close()
+//    } catch (e: IOException) {
+//        Log.d("Exception read", "File write failed: " + e.toString())
+//    }
+//
+//}
+//
+//
+//fun readFromFile(context: Context): String {
+//    val filename = "myfile"
+//    val numbers = arrayOf("1, 2, 3")
+//    val outputStream: FileOutputStream
+//
+//    try {
+//        outputStream = Context.
+//        outputStream = openFileOutput(filename, Context.MODE_APPEND)
+//        for (s in numbers) {
+//            outputStream.write(s.toByteArray())
+//        }
+//        outputStream.close()
+//    } catch (e: Exception) {
+//        e.printStackTrace()
+//    }
+//
+//}

@@ -22,10 +22,15 @@ import khalykbayev.bitcoinproject.R
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.l4digital.fastscroll.FastScrollRecyclerView
 import com.squareup.picasso.Picasso
+import khalykbayev.bitcoinproject.Adapter.TinyDB
+import khalykbayev.bitcoinproject.Api.App
+import khalykbayev.bitcoinproject.Models.PicsumImage
 import khalykbayev.bitcoinproject.ObservableTransactionArrayList
 import khalykbayev.bitcoinproject.getDate
-import khalykbayev.bitcoinproject.readFromFile
 import kotlinx.android.synthetic.main.transaction_list_fragment.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.collections.ArrayList
 
 class TransactionList : Fragment() {
@@ -36,6 +41,8 @@ class TransactionList : Fragment() {
     private lateinit var viewModel: TransactionListViewModel
     lateinit var transactionRecyclerView: FastScrollRecyclerView
     lateinit var adapter: TransactionListAdapter
+
+    lateinit var tinydb: TinyDB
 
     lateinit var detail_constraint: ConstraintLayout
     lateinit var detail_background_button: Button
@@ -73,6 +80,8 @@ class TransactionList : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        tinydb = TinyDB(context!!)
+        loadImages()
         Log.d(TAG, "onStart")
 
     }
@@ -100,12 +109,11 @@ class TransactionList : Fragment() {
                 } else {
                     detail_card_type_value.text = "Продажа"
                 }
-                Picasso.get().load("https://source.unsplash.com/random/300x300").into(detail_card_image)
+                Picasso.get().load(getImageUrl()).into(detail_card_image)
                 showDetailView()
             }
 
             override fun onLongClick(view: View?, position: Int) {
-                readFromFile("name.json")
                 //Toast.makeText(activity, "LongPress : $position", Toast.LENGTH_SHORT).show()
             }
         }))
@@ -147,7 +155,39 @@ class TransactionList : Fragment() {
 
 
     fun refresh() {
-        viewModel?.loadTransactions(200)
+        viewModel.loadTransactions(200)
     }
 
+    private val key = "key"
+
+    fun getImageUrl(): String {
+        val list = tinydb.getListString(key)
+        val randomInt = (0 until list.count()).random()
+        return list[randomInt]
+    }
+
+
+    fun loadImages() {
+        App.picsumApi.getPicsumImageList().enqueue(object :
+            Callback<ArrayList<PicsumImage>> {
+
+            override fun onResponse(call: Call<ArrayList<PicsumImage>>, response: Response<ArrayList<PicsumImage>>) {
+                Log.d(TAG, "getPicsumImageList onResponse")
+                if (response.code() == 200) {
+                    Log.d(TAG, "getPicsumImageList onResponse 200, count: ${response.body()!!.count()}")
+                    //val json = Gson().toJson(response.body()!!)
+                    val list: ArrayList<String> = ArrayList()
+                    for (i in 0 until response.body()!!.count()) {
+                        if (response.body()!![i].url != null) {
+                            list.add(response.body()!![i].url!!)
+                        }
+                    }
+                    tinydb.putListString("key", list)
+                }
+            }
+            override fun onFailure(call: Call<ArrayList<PicsumImage>>, t: Throwable) {
+                Log.d(TAG, "getPicsumImageList onFailure:${t.localizedMessage}")
+            }
+        })
+    }
 }
