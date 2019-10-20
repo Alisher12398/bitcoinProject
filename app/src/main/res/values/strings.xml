@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">BitcoinProject</string>
-    <string name="title_converter">Home</string>
-    <string name="title_exchange_rates">Exchange Rates</string>
-    <string name="title_transaction_list">Transaction List</string>
+    <string name="title_converter">Ковертер валют</string>
+    <string name="title_exchange_rates">Текущий курс</string>
+    <string name="title_transaction_list">Список транзакций</string>
+    <string name="password">Пароль</string>
+    <string name="email">Email</string>
+
+
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
+    <!--    <string name=""></string>-->
 </resources>
