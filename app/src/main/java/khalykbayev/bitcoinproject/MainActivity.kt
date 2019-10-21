@@ -27,6 +27,7 @@ class MainActivity : BaseActivity() {
     private var exchangeRatesFragment : Fragment = ExchangeRates()
     private lateinit var toolbar: Toolbar
     private lateinit var bottomNavigationView: BottomNavigationView
+    private var back_pressed: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,6 +118,18 @@ class MainActivity : BaseActivity() {
         }
         catch (e: NoSuchFieldException) {}
         catch (e: IllegalStateException) {}
+    }
+
+    override fun onBackPressed() {
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+            FirebaseAuth.getInstance().signOut()
+            super.onBackPressed()
+        }
+        else {
+            Toast.makeText(this, "Нажмите еще раз 'Назад' для выхода", Toast.LENGTH_LONG).show()
+            back_pressed = System.currentTimeMillis()
+        }
+
     }
 
 }
