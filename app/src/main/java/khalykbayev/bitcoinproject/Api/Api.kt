@@ -10,6 +10,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.*
 import io.reactivex.Observable
 import khalykbayev.bitcoinproject.Models.PicsumImage
+import khalykbayev.bitcoinproject.Models.Rate
 import kotlin.collections.ArrayList
 
 
@@ -19,5 +20,11 @@ interface Api {
 
     @GET("list?page=2&limit=100")
     fun getPicsumImageList(): Call<ArrayList<PicsumImage>>
+
+    @GET("ticker/btcusd/")
+    fun getRates(): Call<Rate>
+
+//    @GET("live?pairs=USDKZT")
+//    fun getUsdKzt(): Call<FreeForexAPI>
 
 }

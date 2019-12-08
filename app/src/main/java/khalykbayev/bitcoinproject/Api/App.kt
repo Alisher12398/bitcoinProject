@@ -11,26 +11,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-//        retrofit = Retrofit.Builder()
-//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .baseUrl("https://www.bitstamp.net/api/")
-//            .build()
-//
-//        api = retrofit.create(Api::class.java)
     }
-
-//    fun create(): Api {
-//        retrofit = Retrofit.Builder()
-//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .baseUrl("https://www.bitstamp.net/api/")
-//            .build()
-//
-//        return retrofit.create(Api::class.java)
-//    }
-
 
     companion object {
         val bitstampApiBase = Retrofit.Builder()
@@ -46,5 +27,12 @@ class App : Application() {
             .baseUrl("https://picsum.photos/v2/")
             .build()
         var picsumApi: Api = picsumApiBase.create(Api::class.java)
+
+        val freeforexBase = Retrofit.Builder()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://www.freeforexapi.com/api/")
+            .build()
+        var freeforexApi: Api = freeforexBase.create(Api::class.java)
     }
 }

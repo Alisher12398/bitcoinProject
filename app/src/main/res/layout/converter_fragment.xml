@@ -4,16 +4,93 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Converter.ConverterFragment">
+    tools:context=".Converter.ConverterFragment" >
+
+    <View
+        android:id="@+id/central_line"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        >
+
+    </View>
+
+    <EditText
+        android:id="@+id/left_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:inputType="number"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:maxLength="8"
+        android:maxLines="3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/central_line"
+        >
+
+    </EditText>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="34sp"
+        android:text="BTC"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/central_line"
+        app:layout_constraintTop_toBottomOf="@id/left_editText"
+        ></TextView>
+
+    <EditText
+        android:id="@+id/right_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="8"
+        android:maxLines="3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/central_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        android:text="USD"
+
+        app:layout_constraintStart_toEndOf="@id/central_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/right_editText"
+        ></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="="
+        android:textSize="43sp"
+        android:textColor="@color/dark_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="В разработке"
-        android:textSize="22sp" />
+        app:layout_constraintTop_toTopOf="@id/left_editText"
+        app:layout_constraintBottom_toBottomOf="@id/left_editText"
+        >
+
+    </TextView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
