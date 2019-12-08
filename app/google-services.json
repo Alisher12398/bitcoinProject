@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "79968049674",
+    "firebase_url": "https://bitcoinproject-37883.firebaseio.com",
+    "project_id": "bitcoinproject-37883",
+    "storage_bucket": "bitcoinproject-37883.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79968049674:android:24a335cedcba5357551df3",
+        "android_client_info": {
+          "package_name": "khalykbayev.bitcoinproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79968049674-l76a59q3k0rarmqepe4caeqvft4at8oc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0Q3dsK0kketmS5o5Qea_xsBzqVm-DzQM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79968049674-l76a59q3k0rarmqepe4caeqvft4at8oc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
