@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
@@ -23,6 +24,11 @@ import khalykbayev.bitcoinproject.TransactionList.TransactionListViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.R.attr.button
+import android.annotation.SuppressLint
+import android.text.InputFilter
+import androidx.core.content.ContextCompat
+
 
 class ConverterFragment : Fragment() {
 
@@ -58,6 +64,7 @@ class ConverterFragment : Fragment() {
         setListeners()
         viewModel = ViewModelProviders.of(this).get(ConverterViewModel::class.java)
         viewModel.loadRates()
+        setViewForCurrency()
     }
 
     private fun configureView(root: View) {
@@ -66,6 +73,7 @@ class ConverterFragment : Fragment() {
         toTextView = root.findViewById(R.id.to_textview)
         toValueTextView = root.findViewById(R.id.to_value_textview)
         changeCurrencyButton = root.findViewById(R.id.change_currency_button)
+        fromEditText.requestFocus()
     }
 
 
@@ -86,6 +94,43 @@ class ConverterFragment : Fragment() {
             }
         })
 
+        changeCurrencyButton.setOnClickListener {
+            viewModel.changeCurrentCurrency()
+            setViewForCurrency()
+        }
     }
+
+    private fun setViewForCurrency() {
+
+        fromEditText.setText("")
+        toValueTextView.text = ""
+        val filterArray = arrayOfNulls<InputFilter>(1)
+        if (viewModel.currentFromCurrency == ConverterViewModel.Currency.BTC) {
+            fromTextView.text = "BTC"
+            if (context != null) {
+                fromTextView.setTextColor(ContextCompat.getColor(context!!, R.color.bitcoin_orange))
+                toTextView.setTextColor(ContextCompat.getColor(context!!, R.color.dark_green))
+            }
+            filterArray[0] = InputFilter.LengthFilter(9)
+            fromEditText.filters = filterArray
+            filterArray[0] = InputFilter.LengthFilter(15)
+            toValueTextView.filters = filterArray
+            toTextView.text = "USD"
+
+        } else {
+            fromTextView.text = "USD"
+            toTextView.text = "BTC"
+            if (context != null) {
+                fromTextView.setTextColor(ContextCompat.getColor(context!!, R.color.dark_green))
+                toTextView.setTextColor(ContextCompat.getColor(context!!, R.color.bitcoin_orange))
+            }
+            filterArray[0] = InputFilter.LengthFilter(15)
+            fromEditText.filters = filterArray
+            filterArray[0] = InputFilter.LengthFilter(15)
+            toValueTextView.filters = filterArray
+        }
+        fromEditText.setSelection(fromEditText.text.length)
+    }
+
 
 }

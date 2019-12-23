@@ -53,7 +53,15 @@ class ConverterViewModel : ViewModel() {
                 }
             }
         }
-        return result.toString()
+        return String.format("%.3f", result)
+    }
+
+    fun changeCurrentCurrency() {
+        if (currentFromCurrency == Currency.BTC) {
+            currentFromCurrency = Currency.USD
+        } else {
+            currentFromCurrency = Currency.BTC
+        }
     }
 
 }
