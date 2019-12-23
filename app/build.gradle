@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.l4digital.fastscroll:fastscroll:2.0.1'
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

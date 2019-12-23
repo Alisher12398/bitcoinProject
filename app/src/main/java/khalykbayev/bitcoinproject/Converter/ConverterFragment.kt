@@ -4,28 +4,14 @@ import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
-import khalykbayev.bitcoinproject.Api.App
-import khalykbayev.bitcoinproject.Models.Transaction
-
 import khalykbayev.bitcoinproject.R
-import khalykbayev.bitcoinproject.TransactionList.TransactionListViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import android.R.attr.button
-import android.annotation.SuppressLint
 import android.text.InputFilter
 import androidx.core.content.ContextCompat
 
