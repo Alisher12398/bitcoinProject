@@ -11,6 +11,7 @@ import com.anychart.AnyChartView
 import khalykbayev.bitcoinproject.R
 import android.R.attr.data
 import android.util.Log
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.adapters.NumberPickerBindingAdapter.setValue
 import com.anychart.chart.common.dataentry.DataEntry
@@ -41,6 +42,7 @@ class ExchangeRates : Fragment() {
 
     private lateinit var viewModel: ExchangeRatesViewModel
     private lateinit var chartView: AnyChartView
+    private lateinit var loadingTextview: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,7 @@ class ExchangeRates : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.exchange_rates_fragment, container, false)
         chartView = root.findViewById(R.id.any_chart_view)
+        loadingTextview = root.findViewById(R.id.loading_textview_exchange)
         return root
     }
 
@@ -61,6 +64,7 @@ class ExchangeRates : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ExchangeRatesViewModel::class.java)
         setListeners()
         viewModel.loadBPI()
+        loadingTextview.isVisible = true
     }
 
     private fun setListeners() {
@@ -68,6 +72,7 @@ class ExchangeRates : Fragment() {
             ObservableBitcoinPriceIndexValueArrayList.ChangeListener {
             override fun onChange() {
                 chartView.setChart(viewModel.getChart())
+                loadingTextview.isVisible = viewModel.bpi.getList().count() == 0
             }
         })
     }
