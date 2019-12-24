@@ -31,6 +31,10 @@ class ConverterFragment : Fragment() {
     lateinit var toValueTextView: TextView
     lateinit var changeCurrencyButton: MaterialButton
 
+    fun refresh() {
+        viewModel.loadRates()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true

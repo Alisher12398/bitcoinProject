@@ -34,5 +34,12 @@ class App : Application() {
             .baseUrl("https://www.freeforexapi.com/api/")
             .build()
         var freeforexApi: Api = freeforexBase.create(Api::class.java)
+
+        val blockchainBase = Retrofit.Builder()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://api.blockchain.info/charts/")
+            .build()
+        var blockchainApi: Api = blockchainBase.create(Api::class.java)
     }
 }

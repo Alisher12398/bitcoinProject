@@ -23,8 +23,8 @@ import khalykbayev.bitcoinproject.TransactionList.TransactionList
 class MainActivity : BaseActivity() {
 
     private var transactionListFragment = TransactionList()
-    private var converterFragment : Fragment = ConverterFragment()
-    private var exchangeRatesFragment : Fragment = ExchangeRates()
+    private var converterFragment = ConverterFragment()
+    private var exchangeRatesFragment = ExchangeRates()
     private lateinit var toolbar: Toolbar
     private lateinit var bottomNavigationView: BottomNavigationView
     private var back_pressed: Long = 0
@@ -64,7 +64,7 @@ class MainActivity : BaseActivity() {
             R.id.navigation_exchange_rates -> {
                 toolbar.setTitle(R.string.title_exchange_rates)
                 supportFragmentManager.beginTransaction().show(exchangeRatesFragment).commit()
-                toolbar.inflateMenu(R.menu.navbar_menu)
+                toolbar.inflateMenu(R.menu.menu_exchange_rates)
             }
             R.id.navigation_transaction_list -> {
                 toolbar.setTitle(R.string.title_transaction_list)
@@ -74,7 +74,7 @@ class MainActivity : BaseActivity() {
             R.id.navigation_converter -> {
                 toolbar.setTitle(R.string.title_converter)
                 supportFragmentManager.beginTransaction().show(converterFragment).commit()
-                toolbar.inflateMenu(R.menu.navbar_menu)
+                toolbar.inflateMenu(R.menu.menu_converter)
             }
         }
     }
@@ -93,6 +93,15 @@ class MainActivity : BaseActivity() {
             }
             R.id.toolbar_transaction_list_refresh -> {
                 transactionListFragment.refresh()
+            }
+            R.id.toolbar_exchange_rates_refresh -> {
+                exchangeRatesFragment.refresh()
+            }
+            R.id.toolbar_transaction_list_refresh -> {
+                transactionListFragment.refresh()
+            }
+            R.id.toolbar_converter -> {
+                converterFragment.refresh()
             }
         }
         return super.onOptionsItemSelected(item)

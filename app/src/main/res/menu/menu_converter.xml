@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title=""
+        android:id="@+id/toolbar_converter"
+        app:showAsAction="always"
+        android:iconTint="@color/white"
+        android:icon="@drawable/baseline_refresh_white_36dp"/>
+
+    <item
+        android:title="Выйти"
+        android:id="@+id/toolbar_logout"
+        app:showAsAction="always"
+        android:iconTint="@color/white" />
+
+</menu>

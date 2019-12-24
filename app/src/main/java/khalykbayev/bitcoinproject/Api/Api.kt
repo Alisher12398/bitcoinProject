@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.*
 import io.reactivex.Observable
+import khalykbayev.bitcoinproject.Models.BitcoinPriceIndex
 import khalykbayev.bitcoinproject.Models.PicsumImage
 import khalykbayev.bitcoinproject.Models.Rate
 import kotlin.collections.ArrayList
@@ -24,6 +25,9 @@ interface Api {
     @GET("ticker/btcusd/")
     fun getRates(): Call<Rate>
 
+    @GET("market-price?timespan=2weeks")
+    //fun getBPI(@Query("timespan") timespan: String): Call<BitcoinPriceIndex>
+    fun getBPI(): Call<BitcoinPriceIndex>
 //    @GET("live?pairs=USDKZT")
 //    fun getUsdKzt(): Call<FreeForexAPI>
 
