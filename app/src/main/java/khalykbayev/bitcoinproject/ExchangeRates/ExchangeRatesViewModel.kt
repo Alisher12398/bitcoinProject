@@ -39,6 +39,7 @@ class ExchangeRatesViewModel : ViewModel() {
                     if (response.body() != null) {
                         if (response.body()!!.values != null) {
                             if (response.body()!!.values!!.count() > 0) {
+                                Log.d(TAG, "getBPI onResponse 200, count: ${response.body()!!.values!!.count()}")
                                 bpi.setList(response.body()!!.values!!)
                             }
                         }
@@ -56,7 +57,7 @@ class ExchangeRatesViewModel : ViewModel() {
         val waterfall = AnyChart.waterfall()
 
         waterfall.yScale().minimum(0.0)
-        waterfall.labels().format("График биткоина \nза последние 2 недели")
+        //waterfall.labels().format("График биткоина \nза последние 2 недели")
 //        waterfall.yAxis(0).labels().format("\${%Value}{scale:(1000000)(1)|(mln)}")
 //
 //        waterfall.labels().format(
@@ -76,6 +77,7 @@ class ExchangeRatesViewModel : ViewModel() {
 
         for (i in 0 until bpi.getList().count()) {
             val value = String.format("%.2f", bpi.getList()[i].y)
+            Log.d(TAG, bpi.getList()[i].y.toString())
             data.add(ValueDataEntry(getDateTime(bpi.getList()[i].x.toString()), value.toDouble()))
         }
         val end = DataEntry()
